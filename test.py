@@ -20,8 +20,8 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
-# next Tutorial: 17
-# https://www.youtube.com/watch?v=WphXLyXgMWo
+# next Tutorial: 18
+# https://www.youtube.com/watch?v=aDlTl06iBHo
 
 from tkinter import *
 from math import *
