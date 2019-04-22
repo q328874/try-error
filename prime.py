@@ -21,3 +21,19 @@
 #  MA 02110-1301, USA.
 #
 #
+import time
+t0 = time.time()
+n = 200000
+sieve = [True] * (n+1)
+for i in range(2, n+1):
+	if sieve[i]:
+		for mult in range(i + i, n + 1, i):
+			sieve[mult] = False
+			s = 0
+for i in range(2,n+1):
+	if sieve[i]:
+		s+=i
+print(s)
+t1 = time.time()
+total = t1-t0
+print(total)
