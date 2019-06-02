@@ -20,3 +20,11 @@
 #  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
 #  MA 02110-1301, USA.
 #
+import locale
+locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
+# Umstellung auf Deutsch
+#
+import datetime
+import calendar
+print(datetime.datetime.now().strftime("%a %d.%m.%Y %H:%M:%S"))
+print(calendar.calendar(2019, w=2, l=1, c=6, m=3))
