@@ -1,0 +1,35 @@
+Attribute VB_Name = "Putzen"
+Option Explicit
+
+Sub Putzen()
+Attribute Putzen.VB_Description = "Wandlung von VSB/W in VSBW."
+Attribute Putzen.VB_ProcData.VB_Invoke_Func = " \n14"
+    Sheets("IVO").Select
+    Columns("I:I").Select
+' Wandlung von VSB/W in VSBW
+    Selection.Replace What:="VSB/W", Replacement:="VSBW", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+' Wandlung von Punkt in Komma
+    Selection.Replace What:=".", Replacement:=",", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+' Wandlung von PASSS06 in PASS06
+    Selection.Replace What:="PASSS06", Replacement:="PASS06", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+' Wandlung von VSBVSB in VSB
+    Selection.Replace What:="VSBVSB", Replacement:="VSB", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+' Wandlung von RPASSZKGLAU in RPASS,ZKGLAU
+    Selection.Replace What:="RPASSZKGLAU", Replacement:="RPASS,ZKGLAU", LookAt:=xlPart, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+' Wandlung Name c in Beck
+    Columns("E:E").Select
+    Selection.Replace What:="c", Replacement:="Beck", LookAt:=xlWhole, _
+        SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
+        ReplaceFormat:=False
+    Range("A621").Select
+End Sub
