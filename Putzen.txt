@@ -29,4 +29,5 @@ Sub Putzen()
         SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, _
         ReplaceFormat:=False
     Range("A2").Select
+'Test
 End Sub
