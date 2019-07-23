@@ -2,7 +2,7 @@ Attribute VB_Name = "XListe"
 Option Explicit
 Sub XListe()
 Dim Quelle As Worksheet, Ziel As Worksheet
-Dim Zeile As Long, lzQ As Long, lzZ As Long, Spalte As Long, IVOK As Long, PIAV As Long, DOK As Long
+Dim Zeile As Long, lzQ As Long, lzZ As Long, Spalte As Long
 Dim Zeit As Single
 Set Quelle = Worksheets("IVO")
 Set Ziel = Worksheets("XListe")
@@ -10,37 +10,34 @@ Zeit = Timer
 lzQ = Quelle.Cells(Quelle.Rows.Count, 1).End(xlUp).Row
 Quelle.Range("A1:H" & lzQ).Copy Ziel.Range("A1")
 lzZ = Ziel.Cells(Ziel.Rows.Count, 1).End(xlUp).Row
-'Application.ScreenUpdating = False
+Application.ScreenUpdating = False
 
 For Zeile = 2 To lzZ
 
     'IVO
-    IVOK = 9
     For Spalte = 9 To 61
-        If InStr(1, Quelle.Cells(Zeile, IVOK).Text, Ziel.Cells(1, Spalte), vbTextCompare) Then
+        If InStr(1, Quelle.Cells(Zeile, 9).Text, Ziel.Cells(1, Spalte), vbTextCompare) Then
             Ziel.Cells(Zeile, Spalte).Value = "1"
         Else
             Ziel.Cells(Zeile, Spalte).ClearContents
         End If
     Next Spalte
-
     If IsEmpty(Ziel.Cells(Zeile, 35).Value) = True Then GoTo AIFALL
+
     'PIAV (Spalte 62 bis 66)
-    PIAV = 10
     For Spalte = 62 To 66
-        If InStr(1, Quelle.Cells(Zeile, PIAV).Text, Ziel.Cells(1, Spalte), vbTextCompare) Then
+        If InStr(1, Quelle.Cells(Zeile, 10).Text, Ziel.Cells(1, Spalte), vbTextCompare) Then
             Ziel.Cells(Zeile, Spalte).Value = "1"
         Else
             Ziel.Cells(Zeile, Spalte).ClearContents
         End If
     Next Spalte
-
     If IsEmpty(Ziel.Cells(Zeile, 36).Value) = True Then GoTo NächsteZeile
+
     'INPOL-FALL (Spalte 67 bis 77)
 AIFALL:
-    DOK = 18
     For Spalte = 67 To 77
-        If InStr(1, Quelle.Cells(Zeile, DOK).Text, Ziel.Cells(1, Spalte), vbTextCompare) Then
+        If InStr(1, Quelle.Cells(Zeile, 18).Text, Ziel.Cells(1, Spalte), vbTextCompare) Then
             Ziel.Cells(Zeile, Spalte).Value = "1"
         Else
             Ziel.Cells(Zeile, Spalte).ClearContents
@@ -49,7 +46,7 @@ AIFALL:
 
 NächsteZeile:
 Next Zeile
-'Application.ScreenUpdating = True
+Application.ScreenUpdating = True
 
 MsgBox "Zeitbedarf: " & Round(Timer - Zeit, 2) & " Sekunden"
 End Sub
