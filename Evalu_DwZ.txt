@@ -1,0 +1,28 @@
+Option Explicit
+Sub Makro1()
+Dim lz As Long
+
+
+    Sheets("Tabelle1").Select
+    lz = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
+    Columns("C:H").Select
+    Selection.Delete Shift:=xlToLeft
+    Range("A1").Select
+    Range("Tabelle2[[#Headers],[Bemerkung]]").Select
+    Selection.AutoFilter
+    ActiveSheet.ListObjects("Tabelle2").Range.AutoFilter Field:=2, Criteria1:= _
+        "=5 Stunden Regel nicht erreicht", Operator:=xlOr, Criteria2:= _
+        "=keine 4 Dienstpaare"
+    Columns("C:C").Select
+    Selection.ClearContents
+    Range("Tabelle2[[#Headers],[Spalte1]]").Select
+    ActiveCell.FormulaR1C1 = "Betrag"
+    Columns("B:B").Select
+    Selection.Delete Shift:=xlToLeft
+    Selection.NumberFormat = "#,##0.00 $"
+    Range("A2", Cells(lz, 1)) = "Name, Vorname"
+    Range("A2").Select
+    Sheets("Tabelle1").Copy After:=Workbooks("Evalu DwZ.xlsm").Sheets(1)
+    lz = 0
+
+End Sub
