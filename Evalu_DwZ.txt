@@ -1,7 +1,7 @@
 Option Explicit
 Sub Makro1()
 Dim lz As Long
-
+Dim oe As String
 
     Sheets("Tabelle1").Select
     lz = ActiveSheet.Cells(Rows.Count, 1).End(xlUp).Row
@@ -22,7 +22,9 @@ Dim lz As Long
     Selection.NumberFormat = "#,##0.00 $"
     Range("A2", Cells(lz, 1)) = "Name, Vorname"
     Range("A2").Select
-    Sheets("Tabelle1").Copy After:=Workbooks("Evalu DwZ.xlsm").Sheets(1)
+    oe = InputBox("OE eingeben")
+    Sheets("Tabelle1").Name = oe
+    Sheets(oe).Copy After:=Workbooks("Evalu DwZ.xlsm").Sheets(1)
     lz = 0
 
 End Sub
