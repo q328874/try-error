@@ -26,24 +26,13 @@ For Each Zelle In Range("B2:B" & lz)
     Zelle.Value = CDate(Zelle.Value)
     Zelle.NumberFormat = "ddd, dd/mm/yy"
     Zelle.HorizontalAlignment = xlRight
+    Select Case Weekday(Zelle)
+      Case 1, 7
+        Zelle.Interior.ColorIndex = 15
+      Case Else
+        Zelle.Interior.ColorIndex = xlNone
+    End Select
 Next
-Range("B2:B" & lz).Select
-Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=WOCHENTAG($B2)=1"
-Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
-With Selection.FormatConditions(1).Interior
-    .PatternColorIndex = xlAutomatic
-    .Color = 255
-    .TintAndShade = 0
-End With
-Selection.FormatConditions(1).StopIfTrue = False
-Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=WOCHENTAG($B2)=7"
-Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
-With Selection.FormatConditions(1).Interior
-    .PatternColorIndex = xlAutomatic
-    .Color = 26367
-    .TintAndShade = 0
-End With
-Selection.FormatConditions(1).StopIfTrue = False
 
 ' Spalten D-J in echtes Zeitformat wandeln
 Range("D2:J" & lz).Select
