@@ -1,0 +1,68 @@
+Attribute VB_Name = "mod_Format"
+Option Explicit
+Sub Formatierung()
+
+' das Textformat von DPNA in richtige Datum- und Zeitformate wandeln
+' und nicht benötigte Spalten entfernen
+
+' letzte Zeile ermitteln
+Worksheets("Tabelle1").Activate
+Dim Zelle As Range
+Dim lz As Long
+lz = Cells(Rows.Count, 1).End(xlUp).Row
+
+' nicht benötigte Spalten löschen
+Columns("W:AT").Delete 'Plan-Soll, Jahressoll, etc.
+Columns("C").Delete ' Wochentag
+
+' neue Spalte für abgesetzte Stunden (negatives Zeitvolumen) einfügen
+Columns("K").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+Range("K1") = "minus"
+Range("J1") = "plus"
+
+' Spalte B in echtes Datumsformat wandeln und Wochenenden hevorheben
+' ToDo: Feiertage
+For Each Zelle In Range("B2:B" & lz)
+    Zelle.Value = CDate(Zelle.Value) * 1
+    Zelle.NumberFormat = "[$-de-DE]ddd, dd/mm/yy"
+    Zelle.HorizontalAlignment = xlRight
+Next
+Range("B2:B" & lz).Select
+Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=WOCHENTAG($B2)=1"
+Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+With Selection.FormatConditions(1).Interior
+    .PatternColorIndex = xlAutomatic
+    .Color = 255
+    .TintAndShade = 0
+End With
+Selection.FormatConditions(1).StopIfTrue = False
+Selection.FormatConditions.Add Type:=xlExpression, Formula1:="=WOCHENTAG($B2)=7"
+Selection.FormatConditions(Selection.FormatConditions.Count).SetFirstPriority
+With Selection.FormatConditions(1).Interior
+    .PatternColorIndex = xlAutomatic
+    .Color = 26367
+    .TintAndShade = 0
+End With
+Selection.FormatConditions(1).StopIfTrue = False
+
+' Spalten D-J in echtes Zeitformat wandeln
+Range("D2:J" & lz).Select
+Selection.Replace What:=",", Replacement:=":", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False
+Selection.NumberFormat = "h:mm"
+
+'negative Zeitvolumen aus Spalte J nach rechts verschieben, Minuszeichen entfernen und in echtes Zeitfomat wandeln
+For Each Zelle In Range("J2:J" & lz)
+    If Zelle.Value Like "-*" Then
+        Zelle.Offset(0, 1).Value = Mid(Zelle.Value, 2)
+        Zelle.ClearContents
+    End If
+Next
+
+' Spalten M-V in echtes Zeitformat wandeln
+Range("M2:V" & lz).Select
+Selection.Replace What:=",", Replacement:=":", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False
+Selection.NumberFormat = "h:mm"
+
+Range("B2").Select
+Columns("A:V").EntireColumn.AutoFit
+End Sub
