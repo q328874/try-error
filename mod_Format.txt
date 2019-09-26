@@ -17,14 +17,14 @@ Columns("C").Delete ' Wochentag
 
 ' neue Spalte für abgesetzte Stunden (negatives Zeitvolumen) einfügen
 Columns("K").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
-Range("K1") = "minus"
-Range("J1") = "plus"
+Range("K1") = "Minus"
+Range("J1") = "Plus"
 
 ' Spalte B in echtes Datumsformat wandeln und Wochenenden hevorheben
 ' ToDo: Feiertage
 For Each Zelle In Range("B2:B" & lz)
-    Zelle.Value = CDate(Zelle.Value) * 1
-    Zelle.NumberFormat = "[$-de-DE]ddd, dd/mm/yy"
+    Zelle.Value = CDate(Zelle.Value)
+    Zelle.NumberFormat = "ddd, dd/mm/yy"
     Zelle.HorizontalAlignment = xlRight
 Next
 Range("B2:B" & lz).Select
