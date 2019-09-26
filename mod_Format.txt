@@ -1,18 +1,21 @@
 Option Explicit
 Sub Formatierung()
+' das Textformat in echte Datum- und Zeitformate wandeln
+' nicht benötigte Spalten entfernen
 
-' das Textformat von DPNA in richtige Datum- und Zeitformate wandeln
-' und nicht benötigte Spalten entfernen
+' Vorspiel
+Worksheets("Tabelle1").Activate
+Dim lz As Long
+Dim d As Integer
+Dim Zelle, Bereich As Range
+Dim Jahr, Neujahr, Karfreitag, Ostersonntag, Ostermontag, Maifeiertag, Himmelfahrt, Pfingstsonntag, Pfingstmontag, TDE, Reformationstag, BuBTag, ErsterWeihnachtstag, ZweiterWeihnachtstag As Date
 
 ' letzte Zeile ermitteln
-Worksheets("Tabelle1").Activate
-Dim Zelle As Range
-Dim lz As Long
 lz = Cells(Rows.Count, 1).End(xlUp).Row
 
 ' nicht benötigte Spalten löschen
-Columns("W:AT").Delete 'Plan-Soll, Jahressoll, etc.
-Columns("C").Delete ' Wochentag
+Columns("W:AT").Delete
+Columns("C").Delete
 
 ' neue Spalte für abgesetzte Stunden (negatives Zeitvolumen) einfügen
 Columns("K").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
@@ -23,9 +26,26 @@ Range("J1") = "Plus"
 Rows("1:120").Interior.ColorIndex = xlNone
 Rows("1").Interior.ColorIndex = 15
 
-' Spalte B in echtes Datumsformat wandeln und Wochenenden hevorheben
-' ToDo: Feiertage
-For Each Zelle In Range("B2:B" & lz)
+' Spalte B in echtes Datumsformat wandeln
+' Wochenenden und Feiertage markieren
+Jahr = Year(CDate(Range("B2")))
+Neujahr = DateSerial(Jahr, 1, 1)
+d = (((255 - 11 * (Jahr Mod 19)) - 21) Mod 30) + 21
+Ostersonntag = DateSerial(Jahr, 3, 1) + d + (d > 48) + 6 - ((Jahr + Jahr \ 4 + d + (d > 48) + 1) Mod 7)
+Maifeiertag = DateSerial(Jahr, 5, 1)
+Karfreitag = Ostersonntag - 2
+Ostermontag = Ostersonntag + 1
+Himmelfahrt = Ostersonntag + 39
+Pfingstsonntag = Ostersonntag + 49
+Pfingstmontag = Ostersonntag + 50
+TDE = DateSerial(Jahr, 10, 3)
+Reformationstag = DateSerial(Jahr, 10, 31)
+BuBTag = DateSerial(Jahr, 12, 25) - Weekday(DateSerial(Jahr, 12, 25), vbSunday) - 32
+ErsterWeihnachtstag = DateSerial(Jahr, 12, 25)
+ZweiterWeihnachtstag = DateSerial(Jahr, 12, 26)
+
+Set Bereich = Range("B2:B" & lz)
+For Each Zelle In Bereich
     Zelle.Value = CDate(Zelle.Value)
     Zelle.NumberFormat = "ddd, dd/mm/yy"
     Zelle.HorizontalAlignment = xlRight
@@ -35,7 +55,10 @@ For Each Zelle In Range("B2:B" & lz)
       Case 7
         Zelle.Interior.ColorIndex = 45
       Case Else
-        Zelle.Interior.ColorIndex = xlNone
+        Select Case Zelle.Value
+            Case Is = Neujahr, Ostersonntag, Maifeiertag, Karfreitag, Ostermontag, Himmelfahrt, Pfingstsonntag, TDE, Reformationstag, BuBTag, ErsterWeihnachtstag, ZweiterWeihnachtstag
+                Zelle.Interior.ColorIndex = 3
+        End Select
     End Select
 Next
 
