@@ -1,4 +1,3 @@
-Attribute VB_Name = "mod_Format"
 Option Explicit
 Sub Formatierung()
 
@@ -20,6 +19,10 @@ Columns("K").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
 Range("K1") = "Minus"
 Range("J1") = "Plus"
 
+' Tabelle entfärben
+Rows("1:120").Interior.ColorIndex = xlNone
+Rows("1").Interior.ColorIndex = 15
+
 ' Spalte B in echtes Datumsformat wandeln und Wochenenden hevorheben
 ' ToDo: Feiertage
 For Each Zelle In Range("B2:B" & lz)
@@ -27,8 +30,10 @@ For Each Zelle In Range("B2:B" & lz)
     Zelle.NumberFormat = "ddd, dd/mm/yy"
     Zelle.HorizontalAlignment = xlRight
     Select Case Weekday(Zelle)
-      Case 1, 7
-        Zelle.Interior.ColorIndex = 15
+      Case 1
+        Zelle.Interior.ColorIndex = 3
+      Case 7
+        Zelle.Interior.ColorIndex = 45
       Case Else
         Zelle.Interior.ColorIndex = xlNone
     End Select
