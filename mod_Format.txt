@@ -1,6 +1,6 @@
 Option Explicit
 Sub Formatierung()
-' das Textformat in echte Datum- und Zeitformate wandeln
+' das Textformate der Tabelle1 in echte Datum- und Zeitformate wandeln
 ' nicht benötigte Spalten entfernen
 
 ' Vorspiel
@@ -18,7 +18,7 @@ Columns("W:AT").Delete
 Columns("C").Delete
 
 ' neue Spalte für abgesetzte Stunden (negatives Zeitvolumen) einfügen
-Columns("K").Insert Shift:=xlToRight, CopyOrigin:=xlFormatFromLeftOrAbove
+Columns("K").Insert
 Range("K1") = "Minus"
 Range("J1") = "Plus"
 
@@ -40,7 +40,7 @@ Pfingstsonntag = Ostersonntag + 49
 Pfingstmontag = Ostersonntag + 50
 TDE = DateSerial(Jahr, 10, 3)
 Reformationstag = DateSerial(Jahr, 10, 31)
-BuBTag = DateSerial(Jahr, 12, 25) - Weekday(DateSerial(Jahr, 12, 25), vbSunday) - 32
+BuBTag = DateSerial(Jahr, 12, 25) - Weekday(DateSerial(Jahr, 12, 25), vbMonday) - 32
 ErsterWeihnachtstag = DateSerial(Jahr, 12, 25)
 ZweiterWeihnachtstag = DateSerial(Jahr, 12, 26)
 
@@ -63,9 +63,11 @@ For Each Zelle In Bereich
 Next
 
 ' Spalten D-J in echtes Zeitformat wandeln
-Range("D2:J" & lz).Select
-Selection.Replace What:=",", Replacement:=":", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False
-Selection.NumberFormat = "h:mm"
+Set Bereich = Range("D2:J" & lz)
+For Each Zelle In Bereich
+    Zelle.NumberFormat = "[hh]:mm"
+    Zelle.Value = Replace(Zelle.Value, ",", ":")
+Next
 
 'negative Zeitvolumen aus Spalte J nach rechts verschieben, Minuszeichen entfernen und in echtes Zeitfomat wandeln
 For Each Zelle In Range("J2:J" & lz)
@@ -76,10 +78,22 @@ For Each Zelle In Range("J2:J" & lz)
 Next
 
 ' Spalten M-V in echtes Zeitformat wandeln
-Range("M2:V" & lz).Select
-Selection.Replace What:=",", Replacement:=":", LookAt:=xlPart, SearchOrder:=xlByRows, MatchCase:=False, SearchFormat:=False, ReplaceFormat:=False
-Selection.NumberFormat = "h:mm"
+Set Bereich = Range("M2:V" & lz)
+For Each Zelle In Bereich
+    Zelle.NumberFormat = "[hh]:mm"
+    Zelle.Value = Replace(Zelle.Value, ",", ":")
+Next
 
-Range("B2").Select
-Columns("A:V").EntireColumn.AutoFit
+' Schrift, Rahmen, Spaltenbreite
+With Columns("A:V")
+    .Font.Name = "Calibri"
+    .Font.Size = 11
+    .Borders.LineStyle = xlContinuous
+    .EntireColumn.AutoFit
+End With
+
+ActiveWindow.FreezePanes = False
+ActiveWindow.SplitRow = 1
+ActiveWindow.FreezePanes = True
+Range("C2").Select
 End Sub
