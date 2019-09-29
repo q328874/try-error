@@ -1,3 +1,6 @@
+# Python Script des Videos "Blockchain selber bauen" von Viktor Garske
+# https://www.youtube.com/watch?v=UYeXfzyvm2c
+
 import hashlib
 
 class Block:
@@ -55,4 +58,3 @@ class Blockchain:
             self.add(block)
         else:
             raise Exeption("Missing Genesis block")
-            
