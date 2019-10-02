@@ -5,6 +5,7 @@ Sub Formatierung()
 
 ' Vorspiel
 Worksheets("Tabelle1").Activate
+Application.ScreenUpdating = False
 Dim Laufzeit As Double
 Laufzeit = Timer
 Dim lz As Long
@@ -148,6 +149,7 @@ ActiveWindow.FreezePanes = False
 ActiveWindow.SplitRow = 1
 ActiveWindow.FreezePanes = True
 Range("C2").Select
+Application.ScreenUpdating = True
 
 MsgBox Format(Timer - Laufzeit, "#0.00") & " Sekunden gerödelt!"
 End Sub
