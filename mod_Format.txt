@@ -8,10 +8,13 @@ Worksheets("Tabelle1").Activate
 Application.ScreenUpdating = False
 Dim Laufzeit As Double
 Laufzeit = Timer
-Dim lz As Long
-Dim d As Integer
-Dim Zelle, Bereich As Range
-Dim Jahr, Neujahr, Karfreitag, Ostersonntag, Ostermontag, Maifeiertag, Himmelfahrt, Pfingstsonntag, Pfingstmontag, TDE, Reformationstag, BuBTag, ErsterWeihnachtstag, ZweiterWeihnachtstag As Date
+Dim d as Integer, lz As Integer
+Dim Zelle as Range, Bereich As Range
+Dim Jahr as Date, Neujahr as Date, Karfreitag as Date
+Dim Ostersonntag as Date, Ostermontag as Date, Maifeiertag as Date
+Dim Himmelfahrt as Date, Pfingstsonntag as Date, Pfingstmontag as Date
+Dim TDE as Date, Reformationstag as Date, BuBTag as Date
+Dim ErsterWeihnachtstag as Date, ZweiterWeihnachtstag As Date
 
 ' letzte Zeile ermitteln
 lz = Cells(Rows.Count, 1).End(xlUp).Row
