@@ -34,6 +34,8 @@ Rows("1").Interior.ColorIndex = 15
 
 ' Spalte B in echtes Datumsformat wandeln
 ' Wochenenden und Feiertage markieren
+' http://www.office-loesung.de/ftopic472647_0_0_asc.php
+
 Jahr = Year(CDate(Range("B2")))
 Neujahr = DateSerial(Jahr, 1, 1)
 d = (((255 - 11 * (Jahr Mod 19)) - 21) Mod 30) + 21
@@ -69,53 +71,10 @@ For Each Zelle In Bereich
 Next
 
 ' Spalten D-G in echtes Zeitformat wandeln (von, bis)
-' Datumswerte hinzufügen
 Set Bereich = Range("D2:G" & lz)
 For Each Zelle In Bereich
     Zelle.NumberFormat = "h:mm"
     Zelle.Value = Replace(Zelle.Value, ",", ":")
-Next
-
-Set Bereich = Range("E2:E" & lz) ' bis1
-For Each Zelle In Bereich
-    If Zelle.Offset(0, -1).Value = Empty Then
-        Zelle.ClearContents
-        ElseIf Zelle.Value >= Zelle.Offset(0, -1).Value Then
-            Zelle.Value = Zelle.Value + Zelle.Offset(0, -3).Value
-            Zelle.NumberFormat = "h:mm"
-        Else
-            Zelle.Value = Zelle.Value + DateAdd("d", 1, Zelle.Offset(0, -3).Value)
-            Zelle.NumberFormat = "h:mm"
-    End If
-Next
-
-Set Bereich = Range("D2:D" & lz) ' von1
-For Each Zelle In Bereich
-    If Zelle.Value <> Empty Then
-        Zelle.Value = Zelle.Value + Zelle.Offset(0, -2).Value
-        Zelle.NumberFormat = "h:mm"
-    End If
-Next
-
-Set Bereich = Range("G2:G" & lz) ' bis2
-For Each Zelle In Bereich
-    If Zelle.Offset(0, -1).Value = Empty Then
-        Zelle.ClearContents
-        ElseIf Zelle.Value >= Zelle.Offset(0, -1).Value Then
-            Zelle.Value = Zelle.Value + Zelle.Offset(0, -5).Value
-            Zelle.NumberFormat = "h:mm"
-        Else
-            Zelle.Value = Zelle.Value + DateAdd("d", 1, Zelle.Offset(0, -5).Value)
-            Zelle.NumberFormat = "h:mm"
-    End If
-Next
-
-Set Bereich = Range("F2:F" & lz) ' von2
-For Each Zelle In Bereich
-    If Zelle.Value <> Empty Then
-        Zelle.Value = Zelle.Value + Zelle.Offset(0, -4).Value
-        Zelle.NumberFormat = "h:mm"
-    End If
 Next
 
 ' Spalten H-J in echtes Zeitformat wandeln (Plan, Ist, +/-)
