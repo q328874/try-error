@@ -5,16 +5,17 @@ Sub Formatierung()
 
 ' Vorspiel
 Worksheets("Tabelle1").Activate
+ActiveWindow.DisplayZeros = False
 Application.ScreenUpdating = False
 Dim Laufzeit As Double
 Laufzeit = Timer
-Dim d as Integer, lz As Integer
-Dim Zelle as Range, Bereich As Range
-Dim Jahr as Date, Neujahr as Date, Karfreitag as Date
-Dim Ostersonntag as Date, Ostermontag as Date, Maifeiertag as Date
-Dim Himmelfahrt as Date, Pfingstsonntag as Date, Pfingstmontag as Date
-Dim TDE as Date, Reformationstag as Date, BuBTag as Date
-Dim ErsterWeihnachtstag as Date, ZweiterWeihnachtstag As Date
+Dim d As Integer, lz As Integer
+Dim Zelle As Range, Bereich As Range
+Dim Jahr As Date, Neujahr As Date, Karfreitag As Date
+Dim Ostersonntag As Date, Ostermontag As Date, Maifeiertag As Date
+Dim Himmelfahrt As Date, Pfingstsonntag As Date, Pfingstmontag As Date
+Dim TDE As Date, Reformationstag As Date, BuBTag As Date
+Dim ErsterWeihnachtstag As Date, ZweiterWeihnachtstag As Date
 
 ' letzte Zeile ermitteln
 lz = Cells(Rows.Count, 1).End(xlUp).Row
@@ -25,8 +26,14 @@ Columns("C").Delete
 
 ' neue Spalte für abgesetzte Stunden (negatives Zeitvolumen) einfügen
 Columns("K").Insert
+
+' Spaltenüberschriften ändern
 Range("K1") = "Minus"
 Range("J1") = "Plus"
+Range("Q1") = "Nacht"
+Range("R1") = "Nacht06"
+Range("S1") = "Betrag"
+Range("T1:V1").ClearContents
 
 ' Tabelle entfärben
 Rows("1:120").Interior.ColorIndex = xlNone
