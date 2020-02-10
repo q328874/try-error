@@ -67,6 +67,11 @@ With Worksheets("2019")
 'Spaltenbreite in Tabelle 2019 automatisch anpassen
 .Columns("A:AA").EntireColumn.AutoFit
 
+'Fenster fixieren
+.Range("B2").Select
+ActiveWindow.FreezePanes = True
+
+'Nullwerte ausblenden
 ActiveWindow.DisplayZeros = False
 End With
 End Sub
