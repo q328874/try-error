@@ -47,7 +47,7 @@ End With
 
 With Worksheets("2019")
   'Spalte A mit Namen nach Blatt 2019 kopieren
-  Tabelle1.Range("A1:A" & lz).Copy Worksheets("2019").Range("A1:A" & lz)
+  Tabelle1.Range("A1:A" & lz).Copy .Range("A1:A" & lz)
 
   'Spalten "OE/Funktion" und "Zulage alt" in Tabelle 2019 einfügen
   .Columns("B:C").Insert Shift:=xlToLeft, CopyOrigin:=xlFormatFromLeftOrAbove
@@ -62,9 +62,11 @@ With Worksheets("2019")
   Next i
 
 'Autofilter aktivieren
-'.Rows("1:1").AutoFilter
+.Rows("1:1").AutoFilter
 
 'Spaltenbreite in Tabelle 2019 automatisch anpassen
-'.Columns("A:AA").EntireColumn.AutoFit
+.Columns("A:AA").EntireColumn.AutoFit
+
+ActiveWindow.DisplayZeros = False
 End With
 End Sub
