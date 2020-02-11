@@ -1,4 +1,3 @@
-Attribute VB_Name = "EMAVO"
 Option Explicit
 Sub EMAVO()
 'Evaluation der neuen EMAVO ggü. der vorherigen Pauschale
@@ -8,6 +7,11 @@ Sub EMAVO()
 Dim lz As Integer, zSpalte As Integer, i As Integer, Spalte As Integer, Zeile As Integer
 Dim Zelle As Range, Bereich As Range
 Dim myWS As Worksheet
+
+If WorksheetExists("2019") Then
+    MsgBox "Tabelle exitiert bereits ... Funktion wird abgebrochen!"
+    Exit Sub
+End If
 
 Application.ScreenUpdating = False
 Worksheets.Select
@@ -91,8 +95,17 @@ With Worksheets("2019")
 
     'Nullwerte ausblenden
     ActiveWindow.DisplayZeros = False
+    
+    'nach vorn verschieben
+    .Move before:=Worksheets(1)
 End With
 
 Application.ScreenUpdating = True
 
 End Sub
+
+Public Function WorksheetExists(ByVal WorksheetName As String) As Boolean
+    On Error Resume Next
+    WorksheetExists = (Sheets(WorksheetName).Name <> "")
+    On Error GoTo 0
+End Function
