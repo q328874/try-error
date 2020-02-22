@@ -57,4 +57,4 @@ class Blockchain:
             block = Block(self.last_block.current_hash, data)
             self.add(block)
         else:
-            raise Exeption("Missing Genesis block")
+            raise Exception("Missing Genesis block")
