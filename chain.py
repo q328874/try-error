@@ -52,7 +52,7 @@ class Blockchain:
     def last_block(self):
         return self.blocks[-1] if len(self.blocks) else None
 
-    def build_block(self):
+    def build_block(self, data):
         if self.last_block:
             block = Block(self.last_block.current_hash, data)
             self.add(block)
