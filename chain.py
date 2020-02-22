@@ -50,7 +50,7 @@ class Blockchain:
 
     @property
     def last_block(self):
-        return.self.blocks[-1] if len(self.blocks) else None
+        return self.blocks[-1] if len(self.blocks) else None
 
     def build_block(self):
         if self.last_block:
