@@ -3,7 +3,7 @@ Sub EMAVO()
 'Evaluation der neuen EMAVO ggü. der vorherigen Pauschale
 'Betrachtungszeitraum: Kalenderjahr 2019
 'Vergleichswert: Dez. 2018
-'Bezugsgruppe: alle DPNA-Datensätze zum Stichtag 05.02.2020
+'Bezugsgruppe: alle Datensätze zum Stichtag 05.02.2020
 Dim lz As Integer, zSpalte As Integer, i As Integer, Spalte As Integer, Zeile As Integer
 Dim Zelle As Range, Bereich As Range
 Dim myWS As Worksheet
@@ -21,7 +21,6 @@ For Each myWS In Worksheets
     'letzte Zeile
     lz = myWS.Cells(Rows.Count, 1).End(xlUp).Row
 
-    'Spalte Bemerkungen füllen
     'Spalte Betrag in Zahlenformat wandeln
     Set Bereich = myWS.Range("L2:L" & lz)
     For Each Zelle In Bereich
@@ -70,7 +69,7 @@ With Worksheets("2019")
         Sheets(i).Range("K1:L" & lz).Copy .Cells(1, zSpalte)
         zSpalte = zSpalte + 2
     Next i
-    
+
     'Summenspalte anfügen
     .Columns("AB").Insert Shift:=xlToRight
     .Columns("AB").HorizontalAlignment = xlCenter
@@ -82,7 +81,7 @@ With Worksheets("2019")
             .Cells(Zeile, 28).Value = .Cells(Zeile, 28).Value + Cells(Zeile, Spalte).Value
         Next Spalte
     Next Zeile
-    
+
     'Autofilter aktivieren
     .Rows("1:1").AutoFilter
 
@@ -95,7 +94,7 @@ With Worksheets("2019")
 
     'Nullwerte ausblenden
     ActiveWindow.DisplayZeros = False
-    
+
     'nach vorn verschieben
     .Move before:=Worksheets(1)
 End With

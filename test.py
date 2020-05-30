@@ -23,6 +23,7 @@
 import locale
 locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
 # Umstellung auf Deutsch
+# wtf
 #
 import datetime
 import calendar
