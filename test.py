@@ -22,10 +22,8 @@
 #
 import locale
 locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
-# Umstellung auf Deutsch
-# wtf
-#
-import datetime
-import calendar
-print(datetime.datetime.now().strftime("%a %d.%m.%Y %H:%M:%S"))
-print(calendar.calendar(2019, w=2, l=1, c=6, m=3))
+from bs4 import BeautifulSoup
+import requests
+r = requests.get('https://example.org')
+soup = BeautifulSoup(r.text, 'html.parser')
+print(soup.find(id="counter").text.strip())
