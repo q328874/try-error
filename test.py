@@ -21,9 +21,19 @@
 #  MA 02110-1301, USA.
 #
 import locale
-locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
-from bs4 import BeautifulSoup
 import requests
-r = requests.get('https://example.org')
-soup = BeautifulSoup(r.text, 'html.parser')
-print(soup.find(id="counter").text.strip())
+from bs4 import BeautifulSoup
+from datetime import datetime
+import csv
+locale.setlocale(locale.LC_ALL, 'de_DE.utf8')
+#r = requests.get('https://example.org')
+#soup = BeautifulSoup(r.text, 'html.parser')
+#counter = soup.find(id="counter").text.strip())
+counter = 27
+d = datetime.now()
+datum = d.strftime("%x")
+zeit = d.strftime("%X")
+with open ('test.csv', 'a') as newFile:
+    newFileWriter=csv.writer(newFile)
+    newFileWriter.writerow([datum, zeit, counter])
+newFile.close()
